@@ -1,4 +1,4 @@
-package Lecture3JTable;
+package TestPackage;
 
 public class TestClass {
 
