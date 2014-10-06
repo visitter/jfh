@@ -8,7 +8,7 @@ public class Car implements Serializable{
 	private String make;
 	private String model;
 	private int year;
-	private int color;
+	private String color;
 	
 	public String getMake() {
 		return make;
@@ -34,18 +34,18 @@ public class Car implements Serializable{
 		this.year = year;
 	}
 
-	public int getColor() {
+	public String getColor() {
 		return color;
 	}
 
-	public void setColor(int color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 
 	public Car(){
 	
 	}	
-	public Car( String make, String model, int year, int color){
+	public Car( String make, String model, int year, String color){
 		this.make = make;
 		this.model = model;
 		this.year = year;

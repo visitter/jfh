@@ -1,6 +1,5 @@
 package Lecture5;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -20,7 +19,7 @@ public class CarForm extends JFrame{
 	private JTextField make;
 	private JTextField model;
 	private JComboBox<Integer> year;
-	private JComboBox<Integer> color;
+	private JComboBox<String> color;
 	private JButton btnAdd;
 	private JButton btnOpenFile;
 	private JButton btnSaveFile;
@@ -31,41 +30,49 @@ public class CarForm extends JFrame{
 	public CarForm(){		
 		setLayout(null);
 		setResizable(false);
+		setTitle("File IO");
+		setSize(300,350);
 		
 		make = new JTextField("Marka");
-		make.setSize(100,22);
-		make.setLocation(10, 10);
+		make.setSize(120,22);
+		make.setLocation(10, 180);
 		
 		model  = new JTextField("Model");
-		model.setSize(100,20);
-		model.setLocation(10, 35);
+		model.setSize(120,22);
+		model.setLocation(140, 180);
 		
 		year  = new JComboBox<Integer>();		
 		for(int i = 1981; i<2015;i++){
 			year.addItem(i);
 		}
-		year.setSize(100, 22);
-		year.setLocation(10, 60);
+		year.setSize(120, 22);
+		year.setLocation(10, 210);
 		
-		color  = new JComboBox<Integer>();		
-		for(int i = 0; i<15;i++){			
-			color.addItem(i);
+		color  = new JComboBox<String>();
+		
+		for(int i = 0;i<4;i++){
+			String cTmp;
+			switch(i){
+				case 0 :{cTmp = "RED"; break;}
+				case 1 :{cTmp = "GREEN"; break;}
+				case 2 :{cTmp = "BLUE"; break;}
+				case 3 :{cTmp = "YELLOW"; break;}
+				default:cTmp="";
+			}
+			color.addItem( cTmp );		
 		}
-		color.setSize(100, 22);
-		color.setLocation(10, 85);
+		color.setSize(120, 22);
+		color.setLocation(140, 210);
 		
-		txtArea = new JTextArea();
-		txtArea.setSize(100, 100);
-		
+		txtArea = new JTextArea();	
 		txtBar = new JScrollPane(txtArea);
-		//txtBar.add(txtArea);
-		txtBar.setSize(130,130);
-		txtBar.setLocation(110, 60);
+		txtBar.setSize(250,130);
+		txtBar.setLocation(10, 40);
 		
 		
 		btnAdd = new JButton("add");
-		btnAdd.setLocation(10, 110);
-		btnAdd.setSize(100, 22);
+		btnAdd.setLocation(10, 240);
+		btnAdd.setSize(250, 22);
 		
 		btnAdd.addActionListener(new ActionListener() {
 			
@@ -77,8 +84,8 @@ public class CarForm extends JFrame{
 		});
 
 		btnOpenFile = new JButton("Load from file");
-		btnOpenFile.setLocation(110, 10);
-		btnOpenFile.setSize(150, 22);
+		btnOpenFile.setLocation(10, 10);
+		btnOpenFile.setSize(250, 22);
 		btnOpenFile.addActionListener(new ActionListener() {
 			
 			/*
@@ -121,8 +128,8 @@ public class CarForm extends JFrame{
 		});
 	
 		btnSaveFile = new JButton("Save to file");
-		btnSaveFile.setLocation(110, 35);
-		btnSaveFile.setSize(150, 22);
+		btnSaveFile.setLocation(10, 270);
+		btnSaveFile.setSize(250, 22);
 		
 		btnSaveFile.addActionListener(new ActionListener() {
 			/*
@@ -147,7 +154,7 @@ public class CarForm extends JFrame{
 					file = jfc.getSelectedFile();
 				}
 				try {
-					if( file.createNewFile()){
+					if( file.createNewFile()||file.exists()){
 						TxtFileWriter fileW = new TxtFileWriter();
 					
 						if( fileW.openFileSer(file.getAbsolutePath()) ){					
@@ -155,7 +162,7 @@ public class CarForm extends JFrame{
 							String[] obj = txtArea.getText().split("\n");
 							for(int i=0;i<obj.length;i++){
 								String[] params = obj[i].split(" ");					
-								Car car = new Car(params[0],params[1],Integer.parseInt(params[2]),Integer.parseInt(params[3]));
+								Car car = new Car(params[0],params[1],Integer.parseInt(params[2]),params[3]);
 								fileW.writeSer(car);
 							}
 							fileW.closeSer();
