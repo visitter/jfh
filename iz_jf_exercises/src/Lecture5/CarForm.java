@@ -27,29 +27,8 @@ public class CarForm extends JFrame{
 	private JScrollPane txtBar;
 	private File file = null;	
 	
-	public CarForm(){		
-		setLayout(null);
-		setResizable(false);
-		setTitle("File IO");
-		setSize(300,350);
-		
-		make = new JTextField("Marka");
-		make.setSize(120,22);
-		make.setLocation(10, 180);
-		
-		model  = new JTextField("Model");
-		model.setSize(120,22);
-		model.setLocation(140, 180);
-		
-		year  = new JComboBox<Integer>();		
-		for(int i = 1981; i<2015;i++){
-			year.addItem(i);
-		}
-		year.setSize(120, 22);
-		year.setLocation(10, 210);
-		
-		color  = new JComboBox<String>();
-		
+	private void initColor(){
+		color  = new JComboBox<String>();		
 		for(int i = 0;i<4;i++){
 			String cTmp;
 			switch(i){
@@ -63,31 +42,52 @@ public class CarForm extends JFrame{
 		}
 		color.setSize(120, 22);
 		color.setLocation(140, 210);
+	}
+	
+	private void initYear(){
+		year  = new JComboBox<Integer>();		
+		for(int i = 1981; i<2015;i++){
+			year.addItem(i);
+		}
+		year.setSize(120, 22);
+		year.setLocation(10, 210);		
+	}
+	public CarForm(){
+		setLayout(null);
+		setResizable(false);
+		setTitle("File IO");
+		setSize(300,350);
+		
+		make = new JTextField("Marka");
+		make.setSize(120,22);
+		make.setLocation(10, 180);
+		
+		model  = new JTextField("Model");
+		model.setSize(120,22);
+		model.setLocation(140, 180);
+				
+		initYear();
+		initColor();
 		
 		txtArea = new JTextArea();	
 		txtBar = new JScrollPane(txtArea);
 		txtBar.setSize(250,130);
 		txtBar.setLocation(10, 40);
-		
-		
+				
 		btnAdd = new JButton("add");
 		btnAdd.setLocation(10, 240);
-		btnAdd.setSize(250, 22);
-		
-		btnAdd.addActionListener(new ActionListener() {
-			
+		btnAdd.setSize(250, 22);		
+		btnAdd.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {				
-				txtArea.append(make.getText()+" "+model.getText()+" "+year.getSelectedItem()+" "+color.getSelectedItem()+"\n");
-				
+				txtArea.append(make.getText()+" "+model.getText()+" "+year.getSelectedItem()+" "+color.getSelectedItem()+"\n");				
 			}
 		});
 
 		btnOpenFile = new JButton("Load from file");
 		btnOpenFile.setLocation(10, 10);
 		btnOpenFile.setSize(250, 22);
-		btnOpenFile.addActionListener(new ActionListener() {
-			
+		btnOpenFile.addActionListener(new ActionListener(){
 			/*
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -107,12 +107,12 @@ public class CarForm extends JFrame{
 				};					
 			}
 			*/
-			
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser jfc = new JFileChooser();
 				if( jfc.showOpenDialog(null)==JFileChooser.APPROVE_OPTION){
 					file = jfc.getSelectedFile();
-					//ser load
+					//serializable load
 					TxtFileReader fileW = new TxtFileReader();
 					
 					if( fileW.openSer(file.getAbsolutePath()) ){
@@ -129,9 +129,8 @@ public class CarForm extends JFrame{
 	
 		btnSaveFile = new JButton("Save to file");
 		btnSaveFile.setLocation(10, 270);
-		btnSaveFile.setSize(250, 22);
-		
-		btnSaveFile.addActionListener(new ActionListener() {
+		btnSaveFile.setSize(250, 22);		
+		btnSaveFile.addActionListener(new ActionListener(){
 			/*
 			@Override
 			public void actionPerformed(ActionEvent e) {				
