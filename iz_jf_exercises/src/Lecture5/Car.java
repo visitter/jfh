@@ -1,12 +1,14 @@
 package Lecture5;
 
-import java.awt.Color;
+import java.io.Serializable;
 
-public class Car {
+public class Car implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private String make;
 	private String model;
 	private int year;
-	private Color color;
+	private int color;
 	
 	public String getMake() {
 		return make;
@@ -32,24 +34,24 @@ public class Car {
 		this.year = year;
 	}
 
-	public Color getColor() {
+	public int getColor() {
 		return color;
 	}
 
-	public void setColor(Color color) {
+	public void setColor(int color) {
 		this.color = color;
 	}
 
 	public Car(){
 	
 	}	
-	public Car( String make, String model, int year, Color color){
+	public Car( String make, String model, int year, int color){
 		this.make = make;
 		this.model = model;
 		this.year = year;
 		this.color = color;
 	}
 	public String toString(){
-		return getMake()+" "+getModel()+" "+getYear()+" "+getColor();
+		return getMake()+" "+getModel()+" "+getYear()+" "+getColor()+"\n";
 	}
 }
