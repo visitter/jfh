@@ -4,12 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -115,14 +117,22 @@ public class CarForm extends JFrame{
 					//serializable load
 					TxtFileReader fileW = new TxtFileReader();
 					
-					if( fileW.openSer(file.getAbsolutePath()) ){
-						
-						ArrayList<Car> cars = fileW.readSer();
-						for(int i=0;i<cars.size(); i++){
-							txtArea.append(cars.get(i).toString());
-						}						
+					try{
+						if( fileW.openSer(file.getAbsolutePath()) ){
+							txtArea.setText("");
+							ArrayList<Car> cars = fileW.readSer();
+							for(int i=0;i<cars.size(); i++){
+								txtArea.append(cars.get(i).toString());
+							}					
+							JOptionPane.showMessageDialog(null, String.format("File %s \nloaded successfully.", file.getAbsolutePath()));
+						}	
+					}catch(StreamCorruptedException sce){
+						JOptionPane.showMessageDialog(null, String.format("File %s \n %s", file.getAbsolutePath(), sce.getMessage()));
+					
+					}finally{
 						fileW.closeSer();
-					}					
+					}
+					
 				};					
 			}			
 		});
@@ -149,7 +159,7 @@ public class CarForm extends JFrame{
 			public void actionPerformed(ActionEvent e) {				
 				//serializable save
 				JFileChooser jfc = new JFileChooser();
-				if( jfc.showOpenDialog(null)==JFileChooser.APPROVE_OPTION){
+				if( jfc.showSaveDialog(null)==JFileChooser.APPROVE_OPTION){
 					file = jfc.getSelectedFile();
 				}
 				try {
@@ -159,12 +169,16 @@ public class CarForm extends JFrame{
 						if( fileW.openFileSer(file.getAbsolutePath()) ){					
 						
 							String[] obj = txtArea.getText().split("\n");
-							for(int i=0;i<obj.length;i++){
-								String[] params = obj[i].split(" ");					
-								Car car = new Car(params[0],params[1],Integer.parseInt(params[2]),params[3]);
-								fileW.writeSer(car);
+							try{
+								for(int i=0;i<obj.length;i++){
+									String[] params = obj[i].split(" ");					
+									Car car = new Car(params[0],params[1],Integer.parseInt(params[2]),params[3]);
+									fileW.writeSer(car);
+								}
+								JOptionPane.showMessageDialog(null, String.format("File %s \nsaved successfully.", file.getAbsolutePath()));
+							}finally{
+								fileW.closeSer();
 							}
-							fileW.closeSer();
 						}
 					}
 				} catch (NumberFormatException e1) {

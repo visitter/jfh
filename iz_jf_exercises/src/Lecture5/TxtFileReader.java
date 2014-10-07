@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -43,13 +44,16 @@ public class TxtFileReader {
 		return true;
 	}
 	
-	public boolean openSer(String Path){
+	public boolean openSer(String Path)throws StreamCorruptedException{
 		try{
 			inFile = new FileInputStream(Path);
 			//buffer = new BufferedInputStream(inFile);
 			input = new ObjectInputStream(inFile);
-		}
-	    catch (FileNotFoundException e) {			
+		}catch( StreamCorruptedException sce ){
+			sce.printStackTrace();
+			throw new StreamCorruptedException();
+			//return false;
+		}catch (FileNotFoundException e) {			
 			e.printStackTrace();
 			return false;
 		}catch (IOException e) {
