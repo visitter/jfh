@@ -50,8 +50,8 @@ public class TxtFileReader {
 			//buffer = new BufferedInputStream(inFile);
 			input = new ObjectInputStream(inFile);
 		}catch( StreamCorruptedException sce ){
-			sce.printStackTrace();
-			throw new StreamCorruptedException();
+			//sce.printStackTrace();			
+			throw sce;
 			//return false;
 		}catch (FileNotFoundException e) {			
 			e.printStackTrace();

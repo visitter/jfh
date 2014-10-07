@@ -58,7 +58,7 @@ public class CarForm extends JFrame{
 		setLayout(null);
 		setResizable(false);
 		setTitle("File IO");
-		setSize(300,350);
+		setSize(280,350);
 		
 		make = new JTextField("Marka");
 		make.setSize(120,22);
@@ -127,7 +127,7 @@ public class CarForm extends JFrame{
 							JOptionPane.showMessageDialog(null, String.format("File %s \nloaded successfully.", file.getAbsolutePath()));
 						}	
 					}catch(StreamCorruptedException sce){
-						JOptionPane.showMessageDialog(null, String.format("File %s \n %s", file.getAbsolutePath(), sce.getMessage()));
+						JOptionPane.showMessageDialog(null, String.format("File %s \n %s", file.getAbsolutePath(), sce.getLocalizedMessage()),"Error", JOptionPane.ERROR_MESSAGE);
 					
 					}finally{
 						fileW.closeSer();
