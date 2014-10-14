@@ -30,18 +30,8 @@ public class CarForm extends JFrame{
 	private File file = null;	
 	
 	private void initColor(){
-		color  = new JComboBox<String>();		
-		for(int i = 0;i<4;i++){
-			String cTmp;
-			switch(i){
-				case 0 :{cTmp = "RED"; break;}
-				case 1 :{cTmp = "GREEN"; break;}
-				case 2 :{cTmp = "BLUE"; break;}
-				case 3 :{cTmp = "YELLOW"; break;}
-				default:cTmp="";
-			}
-			color.addItem( cTmp );		
-		}
+		String[] colors = {"RED", "GREEN", "BLUE", "YELLOW"};
+		color  = new JComboBox<String>(colors);
 		color.setSize(120, 22);
 		color.setLocation(140, 210);
 	}
@@ -161,32 +151,33 @@ public class CarForm extends JFrame{
 				JFileChooser jfc = new JFileChooser();
 				if( jfc.showSaveDialog(null)==JFileChooser.APPROVE_OPTION){
 					file = jfc.getSelectedFile();
-				}
-				try {
-					if( file.createNewFile()||file.exists()){
-						TxtFileWriter fileW = new TxtFileWriter();
+			
+					try {
+						if( file.createNewFile()||file.exists()){
+							TxtFileWriter fileW = new TxtFileWriter();
 					
-						if( fileW.openFileSer(file.getAbsolutePath()) ){					
+							if( fileW.openFileSer(file.getAbsolutePath()) ){					
 						
-							String[] obj = txtArea.getText().split("\n");
-							try{
-								for(int i=0;i<obj.length;i++){
-									String[] params = obj[i].split(" ");					
-									Car car = new Car(params[0],params[1],Integer.parseInt(params[2]),params[3]);
-									fileW.writeSer(car);
+								String[] obj = txtArea.getText().split("\n");
+								try{
+									for(int i=0;i<obj.length;i++){
+										String[] params = obj[i].split(" ");					
+										Car car = new Car(params[0],params[1],Integer.parseInt(params[2]),params[3]);
+										fileW.writeSer(car);
+									}
+									JOptionPane.showMessageDialog(null, String.format("File %s \nsaved successfully.", file.getAbsolutePath()));
+								}finally{
+									fileW.closeSer();
 								}
-								JOptionPane.showMessageDialog(null, String.format("File %s \nsaved successfully.", file.getAbsolutePath()));
-							}finally{
-								fileW.closeSer();
 							}
 						}
+					} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+					// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
 				}
 			}
 		});

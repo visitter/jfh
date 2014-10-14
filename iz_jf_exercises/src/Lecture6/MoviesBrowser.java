@@ -220,6 +220,7 @@ public class MoviesBrowser extends JFrame{
 			ObjectOutputStream obj = new ObjectOutputStream(stream);
 			obj.writeObject(list);
 			obj.close();
+			JOptionPane.showMessageDialog(this, "File successfully saved");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -235,13 +236,14 @@ public class MoviesBrowser extends JFrame{
 			ObjectInputStream obj = new ObjectInputStream(stream);
 			ArrayList<?> rList;
 			try {
-				rList = (ArrayList<?>)obj.readObject();							
+				rList = (ArrayList<?>)obj.readObject();				
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 				obj.close();
 				return null;
 			}
 			obj.close();
+			JOptionPane.showMessageDialog(this, "File successfully loaded");
 			return rList;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -290,7 +292,6 @@ public class MoviesBrowser extends JFrame{
 				addMovieIterator();
 			}
 		});
-		
 		btnSave.addActionListener( new ActionListener() {
 			
 			@Override
@@ -313,7 +314,6 @@ public class MoviesBrowser extends JFrame{
 				}				
 			}
 		});
-		
 		btnLoad.addActionListener(new ActionListener() {
 			
 			@SuppressWarnings("unchecked")
@@ -336,7 +336,6 @@ public class MoviesBrowser extends JFrame{
 				btnNext.doClick();
 			}
 		});
-		
 		btnNext.addActionListener( new ActionListener() {
 			
 			@Override

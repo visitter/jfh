@@ -76,7 +76,10 @@ public class TxtFileReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
-		} catch (IOException e) {
+		}catch(ClassCastException cce){
+			cce.printStackTrace();
+			return null;
+		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
