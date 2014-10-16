@@ -86,7 +86,7 @@ public class AnswerDlg extends JDialog{
 			public void actionPerformed(ActionEvent e) {
 				if(  e.getSource()==btnOK ){
 					if(answer==null){
-						answer = new Answer(Integer.parseInt(tfNo.getText()), tfText.getText(), chbCorrect.isSelected());						
+						answer = new Answer(Integer.parseInt(tfNo.getText()), tfText.getText(), chbCorrect.isSelected(), false);						
 					}else{
 						answer.setNumber(Integer.parseInt(tfNo.getText()));
 						answer.setText(tfText.getText());
