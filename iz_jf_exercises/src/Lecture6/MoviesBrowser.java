@@ -8,9 +8,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.time.Year;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ListIterator;
+
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -182,7 +183,9 @@ public class MoviesBrowser extends JFrame{
 		addListeners();
 	}
 	private void addItemsInCombos(){
-		for(int i=1900; i<=Year.now().getValue(); i++){
+		Calendar cal = Calendar.getInstance();		
+		
+		for(int i=1900; i<=cal.get(Calendar.YEAR); i++){
 			cbYear.addItem(i);
 		}
 		Genre[] vals = Genre.values();
