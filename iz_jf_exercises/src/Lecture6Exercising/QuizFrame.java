@@ -148,9 +148,15 @@ public class QuizFrame extends JFrame{
 					createAnswers( q.getAnswers());
 				}
 			}catch(NoSuchElementException nse){
-				JOptionPane.showMessageDialog(null, "No more questions\nReady for result?", "", JOptionPane.YES_NO_OPTION);
+				JOptionPane.showMessageDialog(null, "No more questions\nReady for result?", "", JOptionPane.YES_OPTION);
 			}
 		}else JOptionPane.showMessageDialog(null, "No questions", "Error", JOptionPane.ERROR_MESSAGE);
+		Integer[] arr = {1,2,4,5};
+		test(arr);
+	}
+	
+	private <KT> void test(KT[] arr){
+		
 	}
 	
 }
