@@ -37,8 +37,7 @@ public class MainWindow extends JFrame{
 
 		dfm = new DefaultTableModel(null, columnTitles);
 		table = new JTable(null, columnTitles);
-		table.setModel(dfm);
-		
+		table.setModel(dfm);		
 				
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setLocation(0, 50);
