@@ -14,7 +14,7 @@ public class CircleApplet extends JApplet{
 		
 		while( !lOK ){
 			try{
-				radius  = Double.parseDouble( JOptionPane.showInputDialog("Въведете първото число:") );									 
+				radius  = Double.parseDouble( JOptionPane.showInputDialog("Въведете радиус:") );									 
 				
 				lOK = true;
 				

@@ -12,8 +12,10 @@ public class UserRectApplet extends JApplet{
 	private Integer height;		
 		
 	public void init(){
-		boolean lOK = false; 
 		
+	}
+	public void start(){
+		boolean lOK = false;
 		while( !lOK ){
 			try{
 				x      = Integer.parseInt( JOptionPane.showInputDialog("Въведете X координата:") );
@@ -23,8 +25,14 @@ public class UserRectApplet extends JApplet{
 				
 				if( (x<0)||(y<0)||(width<0)||(height<0)	)
 					throw new NumberFormatException();
+
+				if( width>getWidth())
+					width=getWidth();
+				if( height>getHeight() )
+					width=getHeight();
 				
-				lOK = true;				
+				lOK = true;		
+				repaint();
 			}catch(NumberFormatException nfe){
 				JOptionPane.showMessageDialog(null, "Моля, въведете числа >=0", "Error", JOptionPane.ERROR_MESSAGE);			
 			}catch( NullPointerException npe ){
