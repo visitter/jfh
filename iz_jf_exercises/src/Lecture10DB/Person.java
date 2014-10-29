@@ -14,14 +14,13 @@ public class Person
    } // end no-argument Person constructor
 
    // constructor
-   public Person( int id, String first, String last, 
-      String emailAddress, String phone )
+   public Person( int id, String first, String last/*, String emailAddress, String phone*/ )
    {
       setAddressID( id );
       setFirstName( first );
       setLastName( last );
-      setEmail( emailAddress );
-      setPhoneNumber( phone );
+     // setEmail( emailAddress );
+      //setPhoneNumber( phone );
    } // end five-argument Person constructor 
 
    // sets the addressID

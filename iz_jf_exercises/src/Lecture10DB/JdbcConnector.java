@@ -1,5 +1,6 @@
 package Lecture10DB;
 
+import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 public class JdbcConnector {
    
    private Connection connection = null; // manages connection
+   private Statement selectStatement;
    private PreparedStatement selectAllPeople = null; 
    private PreparedStatement selectPeopleByLastName = null; 
    private PreparedStatement insertNewPerson = null; 
@@ -25,17 +27,19 @@ public class JdbcConnector {
    {	  
       try 
       {
-         //Class.forName("org.apache.derby.jdbc.ClientDriver");
+         Class.forName("org.apache.derby.jdbc.ClientDriver");
     	  				
-         Class.forName(driver);
+         //Class.forName(driver);
            //Enum<Driver> drv =  DriverManager.getDrivers();
-         connection = DriverManager.getConnection("jdbc:derby:C:\\Users\\Ivan\\MyDB");
-            //connection=DriverManager.getConnection("jdbc:derby://localhost:1527/Reservation DB"); 
-       
+         //connection = DriverManager.getConnection("jdbc:derby:C:\\Users\\Ivan\\MyDB");
+         connection = DriverManager.getConnection("jdbc:derby://localhost:1527/C:\\Users\\Ivan\\MyDB");
 
          // create query that selects all entries in the AddressBook
+
+         selectStatement = connection.createStatement();                  
+         
          selectAllPeople = 
-            connection.prepareStatement( "SELECT * FROM people" );
+            connection.prepareStatement( "SELECT * FROM PEOPLE" );
          
          // create query that selects entries with a specific last name
          selectPeopleByLastName = connection.prepareStatement( 
@@ -63,17 +67,18 @@ public class JdbcConnector {
       try 
       {
          // executeQuery returns ResultSet containing matching entries
-         resultSet = selectAllPeople.executeQuery(); 
+    	 String statement = "SELECT * FROM PEOPLE";
+    	 resultSet = selectStatement.executeQuery(statement);// selectAllPeople.executeQuery(); 
          results = new ArrayList< Person >();
          
          while ( resultSet.next() )
          {
             results.add( new Person(
-               resultSet.getInt( "addressID" ),
-               resultSet.getString( "firstName" ),
-               resultSet.getString( "lastName" ),
-               resultSet.getString( "email" ),
-               resultSet.getString( "phoneNumber" ) ) );
+               resultSet.getInt( "ID" ),
+               resultSet.getString( "name" ),
+               resultSet.getString( "surname" )
+               /*resultSet.getString( "email" ),
+               resultSet.getString( "phoneNumber" )*/ ) );
          } // end while
       } // end try
       catch ( SQLException sqlException )
@@ -112,12 +117,19 @@ public class JdbcConnector {
          results = new ArrayList< Person >();
 
          while ( resultSet.next() )
-         {
+         {/*
             results.add( new Person( resultSet.getInt( "addressID" ),
                resultSet.getString( "firstName" ),
                resultSet.getString( "lastName" ),
                resultSet.getString( "email" ),
                resultSet.getString( "phoneNumber" ) ) );
+               */
+        	 results.add( new Person(
+                     resultSet.getInt( "ID" ),
+                     resultSet.getString( "name" ),
+                     resultSet.getString( "surname" )
+                     /*resultSet.getString( "email" ),
+                     resultSet.getString( "phoneNumber" )*/ ) );
          } // end while
       } // end try
       catch ( SQLException sqlException )

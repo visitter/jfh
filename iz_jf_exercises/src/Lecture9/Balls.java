@@ -24,7 +24,8 @@ public class Balls extends JFrame{
 		drawArea.setLocation(0,0);
 		drawArea.setSize(500,500);	
 		drawArea.setLayout(null);		
-	
+		drawArea.setDoubleBuffered(true);
+		
 		add(drawArea);
 		
 		addMouseListener( new MouseAdapter() {
