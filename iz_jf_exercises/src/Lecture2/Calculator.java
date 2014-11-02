@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import com.sun.glass.events.WindowEvent;
+
 class Calculator extends WindowTask{
 	enum Funcs{	none, plus, minus, mul, div, res};
 	
@@ -214,8 +216,7 @@ class Calculator extends WindowTask{
 			}
 			@Override
 			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
+				// TODO Auto-generated method stub				
 			}
 		});
 	}
