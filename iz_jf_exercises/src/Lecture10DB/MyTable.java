@@ -18,8 +18,6 @@ public class MyTable extends JTable{
 	}		
 	public void addRow( Object[] info){
 		dfm.addRow(info);		
-		//DefaultTableModel model = (DefaultTableModel) getModel();		
-		//model.addRow( info ) ;
 	}
 	public void insertRow(int row, Object[] info){
 		dfm.insertRow(row, info);		

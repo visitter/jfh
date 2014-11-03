@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -97,35 +98,49 @@ public class BooksRegister extends JInternalFrame{
 				table.deleteAllRows();
 				Object[] obj = new Object[4];
 				
-				if( (eTitle.getText().trim().length()==0) && (eAuthor.getText().trim().length()==0) ){
-					for(Book b: con.getBooks(0,null,null,null,null)){
+				if( (eTitle .getText().trim().length()==0)&&
+					(eAuthor.getText().trim().length()==0)&&
+					(eISBN  .getText().trim().length()==0) ){
+					
+					for(Book b: con.getBooks(0,null,null,null)){
 						obj[0] =b.getId();
 						obj[1] =b.getTitle();
 						obj[2] =b.getYear();
 						obj[3] =b.getIsbn();
 						table.addRow(obj);
 					}	
-				}else if(eTitle.getText().length()>0){
-					/*
-					for(Book b: con.getAuthorsByFirstName(eTitle.getText().trim()) ){					
+				}else if(eTitle.getText().length()>0){					
+					for(Book b: con.getBooks(1,null,eTitle.getText().trim(),null) ){					
 						obj[0] =b.getId();
 						obj[1] =b.getTitle();
 						obj[2] =b.getYear();
 						obj[3] =b.getIsbn();				
 						table.addRow(obj);
 					}
-					*/
-				}else if(eAuthor.getText().length()>0){
-					/*
-					for(Book b: con.getAuthorsByLastName(eAuthor.getText().trim()) ){					
+					
+				}else if(eISBN.getText().length()>0){					
+					for(Book b: con.getBooks(3,null,null,eISBN.getText().trim()) ){					
 						obj[0] =b.getId();
 						obj[1] =b.getTitle();
 						obj[2] =b.getYear();
 						obj[3] =b.getIsbn();				
 						table.addRow(obj);
 					}
-					*/
 				}				
+			}
+		});
+		btnAdd.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				BookView bv = new BookView();
+				bv.setSize(200,140);
+				bv.setModal(true);
+				bv.setLocationRelativeTo(null);
+				System.out.println( bv.showModal());
+				
+				
 			}
 		});
 	}

@@ -55,16 +55,30 @@ public class JdbcConnector {
          System.exit( 1 );
       }
    }
-   public ArrayList< Book > getBooks(int mode, Integer id, String title, Integer year, String isbn){
+   public ArrayList< Book > getBooks(int mode, Integer id, String title, String isbn){
     	ArrayList< Book > results = null;
         ResultSet resultSet = null;             	
     	
     	try {
     		switch (mode){
     	  		case 0:{
-    	   				resultSet = selectAllBooks.executeQuery();
-    	   				break;
+    	   			resultSet = selectAllBooks.executeQuery();
+    	   			break;
     	   		}
+    	  		case 1:{
+    	  			selectBookByTitle.setString( 1, "%"+title+"%" );
+	   				resultSet = selectBookByTitle.executeQuery();
+	   				break;
+    	  		}/*
+    	  		case 2:{
+	   				resultSet = selectAllBooks.executeQuery();
+	   				break;
+    	  		}*/
+    	  		case 3:{
+    	  			selectBookByISBN.setString( 1, "%"+isbn+"%" );
+	   				resultSet = selectBookByISBN.executeQuery();
+	   				break;
+	   		}
     	  		default:{break;}
     		}
 			
@@ -76,7 +90,7 @@ public class JdbcConnector {
 										resultSet.getString("BOOK_NAME"),
 										resultSet.getInt("BOOK_YEAR"),
 										resultSet.getString("BOOK_ISBN")
-										 )
+									 )
 							);
 				}
 					
