@@ -5,6 +5,9 @@ public class Book {
 	private String title;
 	private Integer year;
 	private String isbn;
+
+	private Integer authorId;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -28,13 +31,20 @@ public class Book {
 	}
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
+	}	
+	public Integer getAuthorId() {
+		return authorId;
+	}
+	public void setAuthorId(Integer authorId) {
+		this.authorId = authorId;
 	}
 	
-	public Book(Integer id, String title, Integer year, String isbn){
+	public Book(Integer id, String title, Integer year, String isbn, Integer authorId){
 		this.id = id;
 		this.title = title;
 		this.year = year;
 		this.isbn = isbn;
+		this.authorId = authorId;
 	}
 	
 	public String toString(){

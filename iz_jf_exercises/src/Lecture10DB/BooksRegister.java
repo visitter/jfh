@@ -33,7 +33,7 @@ public class BooksRegister extends JInternalFrame{
 	private BorderLayout bl;
 	
 	private MyTable table;
-	private String[] columnTitles = {"Номер", "Заглавие", "Автор", "ISBN"};
+	private String[] columnTitles = {"Номер", "Заглавие", "Година", "ISBN"};
 	
 	private JdbcConnector con = null;
 	public void setCon( JdbcConnector con ){
@@ -89,6 +89,13 @@ public class BooksRegister extends JInternalFrame{
 		
 		addListeners();
 	}
+	private void addRowObject(Book b, Object...obj){
+		obj[0] =b.getId();
+		obj[1] =b.getTitle();
+		obj[2] =b.getYear();
+		obj[3] =b.getIsbn();				
+		table.addRow(obj);
+	}
 	
 	private void addListeners(){
 		btnSearch.addActionListener(new ActionListener() {
@@ -103,32 +110,26 @@ public class BooksRegister extends JInternalFrame{
 					(eISBN  .getText().trim().length()==0) ){
 					
 					for(Book b: con.getBooks(0,null,null,null)){
-						obj[0] =b.getId();
-						obj[1] =b.getTitle();
-						obj[2] =b.getYear();
-						obj[3] =b.getIsbn();
-						table.addRow(obj);
+						addRowObject(b,obj);
 					}	
 				}else if(eTitle.getText().length()>0){					
-					for(Book b: con.getBooks(1,null,eTitle.getText().trim(),null) ){					
-						obj[0] =b.getId();
-						obj[1] =b.getTitle();
-						obj[2] =b.getYear();
-						obj[3] =b.getIsbn();				
-						table.addRow(obj);
+					for(Book b: con.getBooks(1,null,eTitle.getText().trim(),null) ){
+						addRowObject(b,obj);						
 					}
 					
 				}else if(eISBN.getText().length()>0){					
-					for(Book b: con.getBooks(3,null,null,eISBN.getText().trim()) ){					
-						obj[0] =b.getId();
-						obj[1] =b.getTitle();
-						obj[2] =b.getYear();
-						obj[3] =b.getIsbn();				
-						table.addRow(obj);
+					for(Book b: con.getBooks(3,null,null,eISBN.getText().trim()) ){
+						addRowObject(b,obj);						
 					}
-				}				
+				}else if(eAuthor.getText().length()>0){					
+					for(Book b: con.getBooks(2,eAuthor.getText().trim(),null,null) ){
+						addRowObject(b,obj);						
+					}
+				}
+				
+				
 			}
-		});
+		});		
 		btnAdd.addActionListener(new ActionListener() {
 			
 			@Override
@@ -137,10 +138,30 @@ public class BooksRegister extends JInternalFrame{
 				BookView bv = new BookView();
 				bv.setSize(200,140);
 				bv.setModal(true);
+				bv.setCon(con);
 				bv.setLocationRelativeTo(null);
-				System.out.println( bv.showModal());
+				System.out.println( bv.showModal());				
 				
-				
+			}
+		});
+		btnEdit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				table.setRowSelectionAllowed(true);
+				if( table.getRowCount()>0 ){
+					//System.out.println(); 
+					Integer id = (Integer)table.getValueAt(table.getSelectedRow(), 0);
+					BookView bv = new BookView();
+					bv.bookId = id;
+					bv.mode = 1;
+					bv.setSize(200,140);
+					bv.setModal(true);
+					bv.setCon(con);
+					bv.setLocationRelativeTo(null);
+					System.out.println( bv.showModal());
+				}
 			}
 		});
 	}

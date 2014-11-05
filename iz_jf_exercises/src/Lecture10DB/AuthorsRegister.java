@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -110,6 +111,41 @@ public class AuthorsRegister extends JInternalFrame{
 						table.addRow(obj);
 					}
 				}				
+			}
+		});
+		
+		btnAdd.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				AuthorView av = new AuthorView();
+				av.setSize(200,140);
+				av.setModal(true);
+				av.setCon(con);
+				av.setLocationRelativeTo(null);
+				System.out.println( av.showModal());				
+				
+			}
+		});
+		btnEdit.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				table.setRowSelectionAllowed(true);
+				if( table.getRowCount()>0 ){
+					//System.out.println(); 
+					Integer id = (Integer)table.getValueAt(table.getSelectedRow(), 0);
+					AuthorView av = new AuthorView();
+					av.authorId	= id;
+					av.mode = 1;
+					av.setSize(200,140);
+					av.setModal(true);
+					av.setCon(con);
+					av.setLocationRelativeTo(null);
+					System.out.println( av.showModal());
+				}
 			}
 		});
 	}

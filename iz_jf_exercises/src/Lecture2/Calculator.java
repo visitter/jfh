@@ -9,8 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import com.sun.glass.events.WindowEvent;
-
 class Calculator extends WindowTask{
 	enum Funcs{	none, plus, minus, mul, div, res};
 	
